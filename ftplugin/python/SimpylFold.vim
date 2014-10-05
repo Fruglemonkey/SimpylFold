@@ -127,24 +127,6 @@ function! SimpylFold(lnum)
 
 endfunction
 
-" Obtain the first line of the docstring for the folded class or function, if
-" any exists, for use in the fold text
-function! SimpylFoldText()
-    let next = nextnonblank(v:foldstart + 1)
-    let docstring = getline(next)
-    let ds_prefix = '^\s*\%(\%(["'']\)\{3}\|[''"]\ze[^''"]\)'
-    if docstring =~ ds_prefix
-        let quote_char = docstring[match(docstring, '["'']')]
-        let docstring = substitute(docstring, ds_prefix, '', '')
-        if docstring =~ s:blank_regex
-            let docstring =
-                \ substitute(getline(nextnonblank(next + 1)), '^\s*', '', '')
-        endif
-        let docstring = substitute(docstring, quote_char . '\{,3}$', '', '')
-        return ' ' . docstring
-    endif
-    return ''
-endfunction
 
 setlocal foldexpr=SimpylFold(v:lnum)
 setlocal foldmethod=expr
