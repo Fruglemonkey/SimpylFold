@@ -129,6 +129,11 @@ function! SimpylFold(lnum)
 
 endfunction
 
+
+
+
+setlocal foldexpr=SimpylFold(v:lnum)
+setlocal foldmethod=expr
 fu! CustomFoldText()
     "get first non-blank line
     let fs = v:foldstart
@@ -150,8 +155,4 @@ fu! CustomFoldText()
     return line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
 endf
 set foldtext=CustomFoldText()
-
-
-setlocal foldexpr=SimpylFold(v:lnum)
-setlocal foldmethod=expr
 
